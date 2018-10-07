@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Budget</title>
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <!-- budget -->
+    <header class="hero">
+        <div class="budget">
+            <div class="budget__display">
+                <span class="amount" id="total">0</span>
+                <span class="type">Total Budget</span>
+            </div>
+            <div class="budget__inc">
+                <span class="amount" id="income">0</span>
+                <span class="type">Income</span>
+            </div>
+            <div class="budget__exp">
+                <span class="amount" id="expense">0</span>
+                <span class="type">Expense</span>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <div class="form-container panel--centered">
+        <form class="form">
+            <select id="type">
+                <option value="inc">+</option>
+                <option value="exp">-</option>
+            </select>
+            <input id="description" placeholder="description" type="text">
+            <input id="amount" placeholder="amount" type="number">
+            <input id="mainbtn" type="button" value="&#10004;">
+        </form>
+    </div>
+
+    <div class="container">
+
+        <div class="incTable" id="incTable">
+            <h2 class="heading">Income</h2>
+
+
+        </div>
+
+        <div class="expTable panel" id="expTable">
+
+            <h2 class="heading">Expense</h2>
+         
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
