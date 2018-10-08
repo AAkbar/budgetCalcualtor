@@ -122,7 +122,7 @@ const dataController = (function () {
     let arr = [];
     let id = data.budget.inc.length + 1;
     arr[0] = id;
-    arr[1] = parseInt(inc);
+    arr[1] = Math.round(inc);
     data.budget.inc.push(arr);
   }
   //functions add expense
@@ -130,7 +130,7 @@ const dataController = (function () {
     let arr = [];
     let id = data.budget.exp.length + 1;
     arr[0] = id;
-    arr[1] = parseInt(exp);
+    arr[1] = Math.round(exp);
     data.budget.exp.push(arr);
   }
   //functions calculate total
@@ -141,7 +141,7 @@ const dataController = (function () {
   }
   // for calculating Array
   function calcArray(array) {
-    var i = array.reduce((a, b) => { return a + b[1]; }, 0);
+    let i = array.reduce((a, b) => { return Math.round(a) + Math.round(b[1]); }, 0);
     return i;
   }
 })();
@@ -172,7 +172,12 @@ const mainController = (function () {
     let values = uiController.getValues();
 
     if ((e.keyCode == 13 || e.which == 13 || e.srcElement.id == dom.btn.substr(1))
-      && (values.amount !== "" && values.descrip !== "" && !isNaN(parseInt(values.amount)))) {
+      && (values.amount !== "" && values.descrip !== "" && !isNaN(parseInt(values.amount)) && values.amount !== "0")) {
+
+      if (values.amount.startsWith("-")) {
+        values.type = "exp";
+        values.amount = Math.abs(values.amount);
+      }
       //calculating the data
       dataController.addData(values.type, values.amount);
 
@@ -180,18 +185,21 @@ const mainController = (function () {
       uiController.insertTotal();
 
       //inserting html to the table
-      uiController.insertHtml(values.type, values.descrip, values.amount);
+      uiController.insertHtml(values.type, values.descrip, Math.round(values.amount));
 
     }
   }
   function removeItem(e) {
     if (e.target.nodeName === "BUTTON") {
       //remove Element
-      uiController.removeItem(e.target);
-      //caculat data
-      dataController.addData();
-      //inserting total
-      uiController.insertTotal();
+      e.target.parentNode.parentNode.classList.add("hide");
+      setTimeout(function () {
+        uiController.removeItem(e.target);
+        //caculat data
+        dataController.addData();
+        //inserting total
+        uiController.insertTotal();
+      }, 500);
     }
   }
 
