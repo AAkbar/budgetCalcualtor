@@ -171,8 +171,7 @@ const mainController = (function () {
 
     let values = uiController.getValues();
 
-    if ((e.keyCode == 13 || e.which == 13 || e.srcElement.id == dom.btn.substr(1))
-      && (values.amount !== "" && values.descrip !== "" && !isNaN(parseInt(values.amount)) && values.amount !== "0")) {
+    if ((e.keyCode == 13 || e.which == 13 || e.srcElement.id == dom.btn.substr(1)) && (values.amount !== "" && values.descrip !== "" && !isNaN(Number(values.amount)) && values.amount !== "0")) {
 
       if (values.amount.startsWith("-")) {
         values.type = "exp";
