@@ -64,7 +64,7 @@ const uiController = (function () {
       dom.total.textContent = dataController.data.total;
     },
     removeItem(ele) {
-      let parent = ele.parentNode.parentNode,
+      let parent = ele,
         type = parent.dataset.type,
         id = parseInt(parent.id);
       let index;
@@ -177,6 +177,9 @@ const mainController = (function () {
       if (values.amount.startsWith("-")) {
         values.type = "exp";
         values.amount = Math.abs(values.amount);
+      } else if (values.amount.startsWith("+")) {
+        values.type = "inc";
+        values.amount = Math.abs(values.amount);
       }
       //calculating the data
       dataController.addData(values.type, values.amount);
@@ -190,11 +193,15 @@ const mainController = (function () {
     }
   }
   function removeItem(e) {
+    let parent = e.target.parentNode.parentNode;
     if (e.target.nodeName === "BUTTON") {
+
       //remove Element
-      e.target.parentNode.parentNode.classList.add("hide");
+      parent.classList.add("hide");
+      //bug if double clicked on button it will call again
+      e.target.remove();
       setTimeout(function () {
-        uiController.removeItem(e.target);
+        uiController.removeItem(parent);
         //caculat data
         dataController.addData();
         //inserting total
